@@ -14,7 +14,8 @@ C       Added strong typing: D. Van Buren, T. Jarrett
         implicit real(4) (o-z)
 
         CHARACTER*(*) CSTRING
-        Integer*4     I
+c       Integer*4     I                                                 ! NRG B60623
+        Integer(4)     I
 
         IF(CSTRING .EQ. ' ') THEN
           NUMCHAR = 0
@@ -67,7 +68,8 @@ c       written by T. jarrett
 
 
       CHARACTER*(*) STRING
-      character*132 tmp
+c     character*132 tmp                                                 ! NRG B60623
+      character(132) tmp
 
       L = numchar (string)
 
@@ -129,7 +131,8 @@ c       written by T. jarrett
 
       character*(*) char
       logical erase,zexist
-      character*30 command
+c     character*30 command                                              ! NRG B60623
+      character(30) command
 
       zexist=.false.
 
@@ -149,7 +152,8 @@ c       written by T. jarrett
         implicit real (o-z)
 
       character*(*) char,command
-      character*132 result
+c     character*132 result                                              ! NRG B60623
+      character(132) result
 
       ic = numchar (command)
       ichr = len (char)
@@ -182,7 +186,8 @@ c read string fields
         implicit real (o-z)
 
       character*(*) string,sout
-      character*1 ch
+c     character*1 ch                                                    ! NRG B60623
+      character(1) ch
       integer fields(500,2)
 
 c assumptions: 1st field = first non-blank string
@@ -240,7 +245,8 @@ c assumptions: 1st field = first non-blank string
         implicit real (o-z)
 
         character*(*) head,keyword
-        character*25 s0,result,upcase
+c       character*25 s0,result,upcase                                   ! NRG B60623
+        character(25) s0,result,upcase
 
       result = upcase (keyword)
       keyword = result
@@ -301,7 +307,8 @@ c       end
 
       function upcase(string) result(upper)
       character(len=*), intent(in) :: string
-      character(len=len(string)) :: upper
+c     character(len=len(string)) :: upper                               ! NRG B60623
+      character(len=*) :: upper
 c      integer :: j, L                                                     ! JWF B60619
       integer :: j                                                        ! JWF B60619
 

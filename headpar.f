@@ -11,10 +11,12 @@ C  Read parameter values from FITS header.
 c     integer group,firstpix,nbuffer,npixels,i                          ! JWF B60516
 c     real*8 cd1a,cd1b,cd2a,cd2b,tDB,rat,angle                          ! JWF B60516
 c     real*4 datamin,datamax,nullval                                    ! JWF B60516
-      real*8 crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2
+c     real*8 crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2             ! NRG B60623
+      real(8) crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2
 c     logical anynull                                                   ! JWF B60516
       character*(*) fname
-      character*80 comment
+c     character*80 comment                                              ! NRG B60623
+      character(80) comment
 
 C  The STATUS parameter must always be initialized.
       status=0

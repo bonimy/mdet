@@ -369,7 +369,8 @@
 
       subroutine findkey (narg,arg,key,nkey)
       character*(*) arg(narg),key
-      character*256 string
+c     character*256 string                                              ! NRG B60623
+      character(256) string
       integer nkey,nk,n,j,narg,numchar
 
       nk = numchar(key)

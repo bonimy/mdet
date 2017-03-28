@@ -12,13 +12,17 @@
       integer status,unit,readwrite,blocksize,naxes(2),nfound
 c     integer group,firstpix,nbuffer,npixels,i                          ! JWF B60516
       integer group,firstpix,nbuffer,npixels                            ! JWF B60516
-      real*8 cd1a,cd1b,cd2a,cd2b,tDB,rat,angle
+c     real*8 cd1a,cd1b,cd2a,cd2b,tDB,rat,angle                          ! NRG B60623
+      real(8) cd1a,cd1b,cd2a,cd2b,tDB,rat,angle
 c     real*4 datamin,datamax,nullval,array(lsize)                       ! JWF B60516
-      real*4 nullval,array(lsize)                                       ! JWF B60516
-      real*8 crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2             ! JWF B60521
+c     real*4 nullval,array(lsize)                                       ! JWF B60516      ! NRG B60623
+      real(4) nullval,array(lsize)
+c     real*8 crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2             ! JWF B60521      ! NRG B60623
+      real(8) crval1,crval2,cdelt1,cdelt2,crot,crpix1,crpix2
       logical anynull
       character*(*) fname
-      character*80 comment
+c     character*80 comment                                              ! NRG B60623
+      character(80) comment
 
 C  The STATUS parameter must always be initialized.
       status=0

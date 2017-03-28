@@ -126,7 +126,8 @@ c   character(len=80) :: offsetform                                     ! JWF B6
       integer bandlist(4), backwindow
 c      logical confused,multiframe,newpeak,keepblanking,dbgmatched         ! JWF B60516
       logical confused,multiframe,newpeak,keepblanking                    ! JWF B60516
-      integer*4 ixbr, iybr                                                ! JWF B60516
+c     integer*4 ixbr, iybr                                                ! JWF B60516
+      integer(4) ixbr, iybr                                             ! NRG B60623
 
       data outlist,matchout /" "," "/
       data backwindow,threshold,fwhm /0, 0., 6., 6., 9., 15./
@@ -519,15 +520,16 @@ c     1                                 ibright,ixsat,iysat,satradius
           enddo
 
 ! If requested, reduce pixel precision
-          if(sigfigs .gt. 0) then
-            iscale =  2**floor(sigfigs/log10(2.0)+1)
-            do j = 1,ny
-            do i = 1,nx
-              call impixprcf(b(i,j), iscale, out)
-              b(i,j) = out;
-            enddo
-            enddo
-          end if
+! We remove this call to impixprcf for now.                             ! NRG B60623
+c         if(sigfigs .gt. 0) then
+c           iscale =  2**floor(sigfigs/log10(2.0)+1)
+c           do j = 1,ny
+c           do i = 1,nx
+c             call impixprcf(b(i,j), iscale, out)
+c             b(i,j) = out;
+c           enddo
+c           enddo
+c         end if
           if (svblist(iband) /= ' ') then
               !!!! b = (C-bb)/U !!! DEBUG TPC!!!
                  call writeimage(b,nx,ny,imagelist(1),svblist(iband))

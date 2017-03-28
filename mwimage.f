@@ -18,7 +18,8 @@ c      integer i,group,fpixel,nelements,ncombine                           ! JWF
 c      real(4) ra0,dec0,crpix10,crpix20,cd01,cd02,rot0                     ! JWF B60516
 c      real(4) sumut                                                       ! JWF B60516
 c      character*80 record,comment,s0                                      ! JWF B60516
-      character*80 record                                                 ! JWF B60516
+c     character*80 record                                                 ! JWF B60516    ! NRG B60623
+      character(80) record
       character*(*) fin,fout
 c      logical simple,extend, zexist, erase                                ! JWF B60516
       logical zexist, erase                                               ! JWF B60516
