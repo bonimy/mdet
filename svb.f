@@ -113,6 +113,7 @@
       allocate (ckbox(ksize,ksize))
       bsum = 0
       bwt = 0
+	  csum = 0
 
       do j = -isampy,isampy
       do i = -isampx,isampx
