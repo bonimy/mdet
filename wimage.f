@@ -1,10 +1,10 @@
 C *************************************************************************
-	subroutine wimage (nx,ny,lsize,larray,fin,fout)
+      subroutine wimage (nx,ny,lsize,larray,fin,fout)
 
 
 C  Create a FITS primary array containing a 2-D image
 
-	implicit integer (i-n)
+      implicit integer (i-n)
         implicit real (a-h)
         implicit real (o-z)
 
@@ -33,27 +33,27 @@ C  the program, but it is usually better practice to check the status
 C  value more frequently.
 
       status=0
-	zexist = .false.
-	erase = .true.
+      zexist = .false.
+      erase = .true.
 
-	call deletefile(fout,status,zexist, erase)
-c	call deletefile(fout,status)
+      call deletefile(fout,status,zexist, erase)
+c      call deletefile(fout,status)
 
 C  Get  unused Logical Unit Numbers to use to open the FITS files.
         call ftgiou(inunit,status)
         call ftgiou(outunit,status)
 
-c	write (6,*) 'test0 ',status,outunit
+c      write (6,*) 'test0 ',status,outunit
 
 C  The input FITS file is opened with READONLY access, and the output
 C  FITS file is opened with WRITE access.
-	readwrite=0
-	blocksize=1
+      readwrite=0
+      blocksize=1
         call ftopen(inunit,fin,readwrite,blocksize,status)
 
-c	write (6,*) 'test1 ',status
+c      write (6,*) 'test1 ',status
 
-	status=0
+      status=0
 c       readwrite=1
 cblocksize=1
 c       call ftopen(outunit,fout,readwrite,blocksize,status)
@@ -62,11 +62,11 @@ c       call ftopen(outunit,fout,readwrite,blocksize,status)
 C  Create the new empty FITS file.  The blocksize parameter is a
 C  historical artifact and the value is ignored by FITSIO.
 
-	write (6,'(a)') fout(1:50)
+      write (6,'(a)') fout(1:50)
       blocksize=1
       call ftinit(outunit,fout,blocksize,status)
 
-c	write (6,*) 'test2 ',status
+c      write (6,*) 'test2 ',status
 
 C  This do-loop of calls to FTGREC and FTPREC copies all the keywords from
 C  the input to the output FITS file.  Notice that the specified number
@@ -83,7 +83,7 @@ C  Find the number of keywords in the input table header.
           call ftprec(outunit,record,status)
       end do
 
-c	write (6,*) 'testH ',status
+c      write (6,*) 'testH ',status
 
 
 C  Initialize parameters about the FITS image.
@@ -113,7 +113,7 @@ C  almost always be set = 1.
       nelements=naxes(1)*naxes(2)
       call ftppre(outunit,group,fpixel,nelements,larray,status)
 
-c	write (6,*) 'test3 ',status
+c      write (6,*) 'test3 ',status
 
 C  Write another optional keyword to the header
 C  The keyword record will look like this in the FITS file:
@@ -121,19 +121,19 @@ C
 C  EXPOSURE=                 1500 / Total Exposure Time
 C
 
-	call FTDKEY(outunit,'NAXIS1',status)
+      call FTDKEY(outunit,'NAXIS1',status)
         status=0
-	call ftpkyj(outunit,'NAXIS1',nx,'array size',status)
-	status=0
-	call FTDKEY(outunit,'NAXIS2',status)
+      call ftpkyj(outunit,'NAXIS1',nx,'array size',status)
+      status=0
+      call FTDKEY(outunit,'NAXIS2',status)
         status=0
         call ftpkyj(outunit,'NAXIS2',ny,'array size',status)
 
-	write (6,*) 'write status ',status
+      write (6,*) 'write status ',status
 
 C  The FITS file must always be closed before exiting the program. 
 C  Any unit numbers allocated with FTGIOU must be freed with FTFIOU.
-	call ftclos(inunit, status)
+      call ftclos(inunit, status)
       call ftfiou(inunit, status)
       call ftclos(outunit, status)
       call ftfiou(outunit, status)
@@ -149,7 +149,7 @@ C  A simple little routine to delete a FITS file
 
       integer status,unit,blocksize
       character*(*) filename
-	logical zexist, erase
+      logical zexist, erase
 
 C  Simply return if status is greater than zero
       if (status .gt. 0)return
@@ -163,7 +163,7 @@ C  Try to open the file, to see if it exists
       if (status .eq. 0)then
 C         file was opened;  so now delete it 
           call ftdelt(unit,status)
-c	write (6,*) 'delete the file '
+c      write (6,*) 'delete the file '
       else if (status .eq. 103)then
 C         file doesn't exist, so just reset status to zero and clear errors
           status=0
@@ -173,10 +173,10 @@ C         there was some other error opening the file; delete the file anyway
           status=0
           call ftcmsg
           call ftdelt(unit,status)
-c	 write (6,*) 'force delete the file '
+c       write (6,*) 'force delete the file '
 
-	call access(filename,zexist,erase)
-	write (6,*) 'success'
+      call access(filename,zexist,erase)
+      write (6,*) 'success'
 
       end if
 

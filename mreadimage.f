@@ -5,7 +5,7 @@
 !  readfits.f, with minor modifications for use with MDET.
 
 
-	implicit integer (i-n)
+      implicit integer (i-n)
         implicit real(4) (a-h)
         implicit real(4) (o-z)
 
@@ -26,15 +26,15 @@ C  The STATUS parameter must always be initialized.
 C  Get an unused Logical Unit Number to use to open the FITS file.
       call ftgiou(unit,status)
 
-c	write (6,'(a,a)') 'reading ',fname(1:72)
+c      write (6,'(a,a)') 'reading ',fname(1:72)
 C  Open the FITS file 
       readwrite=0
       call ftopen(unit,fname,readwrite,blocksize,status)
-	if (status /= 0) then
-	    write(6,'(a)') 'MREADIMAGE: Could not read '//trim(fname)
-	    istat = 3
-	    return
-	endif
+      if (status /= 0) then
+          write(6,'(a)') 'MREADIMAGE: Could not read '//trim(fname)
+          istat = 3
+          return
+      endif
 
 C  Determine the size of the image.
       call ftgknj(unit,'NAXIS',1,2,naxes,nfound,status)
@@ -43,74 +43,74 @@ C  Determine the size of the image.
 C  Check that it found both NAXIS1 and NAXIS2 keywords.
       if (nfound .ne. 2)then
           print *,'MREADIMAGE: Failed to read the NAXISn keywords.'
-	  istat = 4
+        istat = 4
           return
       endif
 
-	nx = naxes(1)
+      nx = naxes(1)
         ny = naxes(2)
 cccc
-	crval1 = 0.
-c	call ftgkye(unit, 'CRVAL1', crval1, comment, status)                ! JWF B60521
-	call ftgkyd(unit, 'CRVAL1', crval1, comment, status)                ! JWF B60521
-	if (status.gt.0) then
-		crval1 = 0.
-		status=0
-	endif
+      crval1 = 0.
+c      call ftgkye(unit, 'CRVAL1', crval1, comment, status)                ! JWF B60521
+      call ftgkyd(unit, 'CRVAL1', crval1, comment, status)                ! JWF B60521
+      if (status.gt.0) then
+            crval1 = 0.
+            status=0
+      endif
 
-	crval2 = 0.
+      crval2 = 0.
 c       call ftgkye(unit, 'CRVAL2', crval2, comment, status)            ! JWF B60521
         call ftgkyd(unit, 'CRVAL2', crval2, comment, status)            ! JWF B60521
         if (status.gt.0) then
                 crval1 = 0.
                 status=0
         endif
-	
-c	call ftgkye(unit, 'CRPIX1', crpix1, comment, status)                ! JWF B60521
-	call ftgkyd(unit, 'CRPIX1', crpix1, comment, status)                ! JWF B60521
+      
+c      call ftgkye(unit, 'CRPIX1', crpix1, comment, status)                ! JWF B60521
+      call ftgkyd(unit, 'CRPIX1', crpix1, comment, status)                ! JWF B60521
         if (status.gt.0) status=0
-	
-c	call ftgkye(unit, 'CRPIX2', crpix2, comment, status)                ! JWF B60521
-	call ftgkyd(unit, 'CRPIX2', crpix2, comment, status)                ! JWF B60521
+      
+c      call ftgkye(unit, 'CRPIX2', crpix2, comment, status)                ! JWF B60521
+      call ftgkyd(unit, 'CRPIX2', crpix2, comment, status)                ! JWF B60521
         if (status.gt.0) status=0
 
-	cdelt1 = 0.
+      cdelt1 = 0.
         cdelt2 = 0.
-c	call ftgkye(unit, 'CDELT1', cdelt1, comment, status)                ! JWF B60521
-	call ftgkyd(unit, 'CDELT1', cdelt1, comment, status)                ! JWF B60521
+c      call ftgkye(unit, 'CDELT1', cdelt1, comment, status)                ! JWF B60521
+      call ftgkyd(unit, 'CDELT1', cdelt1, comment, status)                ! JWF B60521
         if (status.gt.0) status=0
         
 c       call ftgkye(unit, 'CDELT2', cdelt2, comment, status)            ! JWF B60521
         call ftgkyd(unit, 'CDELT2', cdelt2, comment, status)            ! JWF B60521
         if (status.gt.0) status=0
 
-c	call ftgkye(unit, 'CROTA2', crot, comment, status)                  ! JWF B60521
-	call ftgkyd(unit, 'CROTA2', crot, comment, status)                  ! JWF B60521
+c      call ftgkye(unit, 'CROTA2', crot, comment, status)                  ! JWF B60521
+      call ftgkyd(unit, 'CROTA2', crot, comment, status)                  ! JWF B60521
         if (status.gt.0) then
-		crot = 0.
-		status=0
-	endif
+            crot = 0.
+            status=0
+      endif
 
 c  CD matrix
 
 
-	if ((abs(cdelt1).le.1.e-5).and.(abs(cdelt2).le.1.e-5)) then
+      if ((abs(cdelt1).le.1.e-5).and.(abs(cdelt2).le.1.e-5)) then
 
-	  cd1_1=0.
-	  cd1_2=0.
-	  cd2_1=0.
-	  cd2_2=0.
+        cd1_1=0.
+        cd1_2=0.
+        cd2_1=0.
+        cd2_2=0.
 
-	 call ftgkye(unit, 'CD1_1', cd1_1, comment, status)
-	 status=0
+       call ftgkye(unit, 'CD1_1', cd1_1, comment, status)
+       status=0
 
-	 call ftgkye(unit, 'CD1_2', cd1_2, comment, status)
+       call ftgkye(unit, 'CD1_2', cd1_2, comment, status)
          status=0
 
-	 call ftgkye(unit, 'CD2_1', cd2_1, comment, status)
+       call ftgkye(unit, 'CD2_1', cd2_1, comment, status)
          status=0
-	
-	 call ftgkye(unit, 'CD2_2', cd2_2, comment, status)
+      
+       call ftgkye(unit, 'CD2_2', cd2_2, comment, status)
          status=0
 
 
@@ -118,21 +118,21 @@ c  CD matrix
                   rat = CD1_2 / CD2_2
                   angle = -datan (rat) * 57.2957795d0
 
-		  tdb = angle/57.2957795d0
+              tdb = angle/57.2957795d0
 
-	  	  cd2a = CD2_2 / dcos(tdb)
-	  	  cd2b = -CD1_2 / dsin(tdb)
+                cd2a = CD2_2 / dcos(tdb)
+                cd2b = -CD1_2 / dsin(tdb)
 
-		if ((abs(CD2_2).gt.abs(CD1_2))) then
+            if ((abs(CD2_2).gt.abs(CD1_2))) then
                       cdelt2 = cd2a*1.
                 else
                       cdelt2 = cd2b*1.
                 endif
 
-	  	  cd1a = -CD1_1 / dcos(tdb)
-	  	  cd1b = -CD2_1 / dsin(tdb)
+                cd1a = -CD1_1 / dcos(tdb)
+                cd1b = -CD2_1 / dsin(tdb)
 
-		if ((abs(CD1_1).gt.abs(CD2_1))) then
+            if ((abs(CD1_1).gt.abs(CD2_1))) then
                      cdelt1 = cd1a*1.
                 else
                      cdelt1 = cd1b*1.
@@ -140,32 +140,32 @@ c  CD matrix
 
                   crot = angle*1.
 
-	else if (cd1_1.ne.0.) then
+      else if (cd1_1.ne.0.) then
 
-		  	rat = CD2_1 / CD1_1
-			angle = datan (rat) * 57.2957795d0
-			tdb = angle/57.2957795d0
+                    rat = CD2_1 / CD1_1
+                  angle = datan (rat) * 57.2957795d0
+                  tdb = angle/57.2957795d0
 
-			cd2a = CD2_2 / dcos(tdb)
-			cd2b = -CD1_2 / dsin(tdb)
+                  cd2a = CD2_2 / dcos(tdb)
+                  cd2b = -CD1_2 / dsin(tdb)
 
-			if ((abs(CD2_2).gt.abs(CD1_2))) then
-			  cdelt2 = cd2a*1.
-		 	else
-			  cdelt2 = cd2b*1.
-			endif
+                  if ((abs(CD2_2).gt.abs(CD1_2))) then
+                    cdelt2 = cd2a*1.
+                   else
+                    cdelt2 = cd2b*1.
+                  endif
 
-			cd1a = -CD1_1 / dcos(tdb)
-			cd1b = -CD2_1 / dsin(tdb)
-			if ((abs(CD1_1).gt.abs(CD2_1))) then
-			 cdelt1 = cd1a*1.	
-		        else
-			 cdelt1 = cd1b*1.
-			endif
+                  cd1a = -CD1_1 / dcos(tdb)
+                  cd1b = -CD2_1 / dsin(tdb)
+                  if ((abs(CD1_1).gt.abs(CD2_1))) then
+                   cdelt1 = cd1a*1.      
+                    else
+                   cdelt1 = cd1b*1.
+                  endif
 
-			crot = angle*1.
+                  crot = angle*1.
 
-	  endif
+        endif
 
         endif
 
