@@ -16,3 +16,7 @@ Replace `-L../cfitsio` with the directory where you are keeping the CFITSIO libr
 The source files were obtained from the latest build on the WISE cluster. To my knowledge, the only documentation and version history of the source is what is provided in its files. Therefore, this repo can only start its version history in the state where the source was obtained.
 # Using MDET
 [ToDo: Document usage]
+# License
+MDET is written under the [GNU General Public License v3.0](LICENSE).
+# Code of Conduct
+Contributors to MDET are required to follow the [Contributor Covenant Code of Conduct](code_of_conduct.md)
