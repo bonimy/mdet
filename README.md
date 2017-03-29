@@ -1,6 +1,5 @@
 # MDET - Multi-wavelength source detection software
 For information on what the MDET algorithm is, take look at [Optimal Multiwavelength Source Detection: Experience Gained
-from the WISE Mission (K. Marsh and T. Jarret)](MarshJarret2012.pdf).
 
 # History
 The MDET module was first written in 2008 for as part of the WISE catalog software pipeline at IPAC. Because the WISE computer cluster is occupied with ongoing satellite operations, we need to get the software running on independent systems not on the WISE cluster.
